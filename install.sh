@@ -104,7 +104,7 @@ upsert_env "PUBLIC_URL" "$PUBLIC_URL" "$ENV_FILE"
 upsert_env "WACS_CADDY_NETWORK" "$WACS_CADDY_NETWORK" "$ENV_FILE"
 upsert_env "APP_IMAGE" "$APP_IMAGE" "$ENV_FILE"
 upsert_env "UPDATER_IMAGE" "$UPDATER_IMAGE" "$ENV_FILE"
-upsert_env "APP_VERSION" "0.1.1" "$ENV_FILE"
+upsert_env "APP_VERSION" "0.1.2" "$ENV_FILE"
 upsert_env "INITIAL_ADMIN_PASSWORD" "$INITIAL_ADMIN_PASSWORD" "$ENV_FILE"
 upsert_env "UPDATER_TOKEN" "$UPDATER_TOKEN" "$ENV_FILE"
 upsert_env "VERSION_MANIFEST_URL" "$VERSION_MANIFEST_URL" "$ENV_FILE"
@@ -116,8 +116,8 @@ chmod 600 "$ENV_FILE"
 
 step "3/6 启动 MarketMind 独立容器"
 cd "$INSTALL_DIR"
-docker compose -p marketmind pull app updater
-docker compose -p marketmind up -d --no-deps app updater
+docker compose -p marketmind pull marketmind updater
+docker compose -p marketmind up -d --no-deps marketmind updater
 for _ in $(seq 1 45); do
   if docker exec marketmind_app wget -qO- http://127.0.0.1:3000/api/health >/dev/null 2>&1; then
     break
@@ -125,7 +125,7 @@ for _ in $(seq 1 45); do
   sleep 2
 done
 docker exec marketmind_app wget -qO- http://127.0.0.1:3000/api/health >/dev/null \
-  || fail "MarketMind 未通过健康检查。现有客服未改动；查看：cd ${INSTALL_DIR} && docker compose logs app"
+  || fail "MarketMind 未通过健康检查。现有客服未改动；查看：cd ${INSTALL_DIR} && docker compose logs marketmind"
 ok "MarketMind 独立应用健康"
 
 step "4/6 安全加入现有 Caddy"
