@@ -1,7 +1,7 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publishedAt": "2026-07-30",
-  "notes": "MarketMind v0.1.2：使用唯一 Compose 服务名，消除与现有 wa-cs 的 app 网络别名冲突。",
+  "notes": "MarketMind v0.1.3：兼容带 XML 命名空间前缀的标准 Excel，并在安装前后核对现有客服代理目标。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
