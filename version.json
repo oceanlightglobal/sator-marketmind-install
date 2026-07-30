@@ -1,7 +1,7 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publishedAt": "2026-07-30",
-  "notes": "MarketMind v0.1.1：兼容关闭 Caddy 管理接口的现有 wa-cs 部署；仅在显式授权时受控重启共享代理。",
+  "notes": "MarketMind v0.1.2：使用唯一 Compose 服务名，消除与现有 wa-cs 的 app 网络别名冲突。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
