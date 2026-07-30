@@ -51,6 +51,8 @@ docker build -t marketmind:test .
 - 安装脚本只把 `marketmind_app` 接入现有 Caddy 网络
 - 修改 `/opt/wa-cs/Caddyfile` 前必做备份；验证失败立即恢复
 - 安装和升级命令从不执行 `docker compose down`，也不更新 `wacs_app`
+- 若旧 wa-cs 设置了 `admin off`，首次接入只能在明确设置
+  `ALLOW_CADDY_RESTART=1` 时受控重启一次 `wacs_caddy`；不会重启应用或数据库
 
 目标地址：`https://marketmind.139-99-89-252.sslip.io`
 
