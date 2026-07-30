@@ -54,6 +54,12 @@ WACS_HEALTH_BEFORE="$(docker inspect --format '{{if .State.Health}}{{.State.Heal
   || fail "现有客服状态为 ${WACS_HEALTH_BEFORE}，先处理现有故障，MarketMind 未做任何改动"
 ok "现有客服状态：${WACS_HEALTH_BEFORE}"
 
+WACS_ROUTE_BEFORE="$(
+  docker exec "$CADDY_CONTAINER" wget -qO- http://app:3000/api/health
+)" || fail "Caddy 当前无法通过 app:3000 访问现有客服，MarketMind 未做任何改动"
+[[ -n "$WACS_ROUTE_BEFORE" ]] || fail "现有客服代理目标返回空内容，MarketMind 未做任何改动"
+ok "现有客服代理目标已留存，安装后会逐字核对"
+
 mapfile -t CADDY_NETWORKS < <(
   docker inspect --format '{{range $name, $_ := .NetworkSettings.Networks}}{{$name}}{{"\n"}}{{end}}' "$CADDY_CONTAINER" |
     sed '/^[[:space:]]*$/d'
@@ -104,7 +110,7 @@ upsert_env "PUBLIC_URL" "$PUBLIC_URL" "$ENV_FILE"
 upsert_env "WACS_CADDY_NETWORK" "$WACS_CADDY_NETWORK" "$ENV_FILE"
 upsert_env "APP_IMAGE" "$APP_IMAGE" "$ENV_FILE"
 upsert_env "UPDATER_IMAGE" "$UPDATER_IMAGE" "$ENV_FILE"
-upsert_env "APP_VERSION" "0.1.2" "$ENV_FILE"
+upsert_env "APP_VERSION" "0.1.3" "$ENV_FILE"
 upsert_env "INITIAL_ADMIN_PASSWORD" "$INITIAL_ADMIN_PASSWORD" "$ENV_FILE"
 upsert_env "UPDATER_TOKEN" "$UPDATER_TOKEN" "$ENV_FILE"
 upsert_env "VERSION_MANIFEST_URL" "$VERSION_MANIFEST_URL" "$ENV_FILE"
@@ -228,7 +234,19 @@ if [[ "$WACS_HEALTH_AFTER" != "healthy" && "$WACS_HEALTH_AFTER" != "running" ]];
   restore_caddy_config || true
   fail "现有客服健康状态变为 ${WACS_HEALTH_AFTER}，已恢复 Caddy 配置"
 fi
+
+WACS_ROUTE_AFTER="$(
+  docker exec "$CADDY_CONTAINER" wget -qO- http://app:3000/api/health
+)" || WACS_ROUTE_AFTER=""
+if [[ "$WACS_ROUTE_AFTER" != "$WACS_ROUTE_BEFORE" ]]; then
+  # 若共享网络出现别名碰撞，先只隔离 MarketMind，再恢复代理配置。
+  # 不断开、不重启也不修改 wacs_app。
+  docker network disconnect "$WACS_CADDY_NETWORK" marketmind_app >/dev/null 2>&1 || true
+  restore_caddy_config || true
+  fail "现有客服代理目标发生变化，已断开 MarketMind 的共享代理网络并恢复 Caddy 配置"
+fi
 ok "现有客服仍为 ${WACS_HEALTH_AFTER}"
+ok "现有客服代理目标内容与安装前完全一致"
 ok "MarketMind HTTPS 正常"
 
 step "6/6 完成"
