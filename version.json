@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0",
+  "publishedAt": "2026-07-30",
+  "notes": "MarketMind v0.1：管理员后台、五表原子导入、业务员号码鉴权、WhatsApp 查询闭环与消息审计。",
+  "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
+  "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
+}
