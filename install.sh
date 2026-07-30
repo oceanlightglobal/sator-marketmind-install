@@ -15,6 +15,7 @@ CADDY_CONTAINER="wacs_caddy"
 WACS_APP_CONTAINER="wacs_app"
 SITE_ADDRESS="marketmind.139-99-89-252.sslip.io"
 PUBLIC_URL="https://${SITE_ADDRESS}"
+ALLOW_CADDY_RESTART="${ALLOW_CADDY_RESTART:-0}"
 
 BOLD='\033[1m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; NC='\033[0m'
 step() { echo -e "\n${BOLD}▶ $*${NC}"; }
@@ -103,7 +104,7 @@ upsert_env "PUBLIC_URL" "$PUBLIC_URL" "$ENV_FILE"
 upsert_env "WACS_CADDY_NETWORK" "$WACS_CADDY_NETWORK" "$ENV_FILE"
 upsert_env "APP_IMAGE" "$APP_IMAGE" "$ENV_FILE"
 upsert_env "UPDATER_IMAGE" "$UPDATER_IMAGE" "$ENV_FILE"
-upsert_env "APP_VERSION" "0.1.0" "$ENV_FILE"
+upsert_env "APP_VERSION" "0.1.1" "$ENV_FILE"
 upsert_env "INITIAL_ADMIN_PASSWORD" "$INITIAL_ADMIN_PASSWORD" "$ENV_FILE"
 upsert_env "UPDATER_TOKEN" "$UPDATER_TOKEN" "$ENV_FILE"
 upsert_env "VERSION_MANIFEST_URL" "$VERSION_MANIFEST_URL" "$ENV_FILE"
@@ -168,10 +169,45 @@ if ! docker exec "$CADDY_CONTAINER" caddy validate --config /etc/caddy/Caddyfile
   fail "新 Caddy 配置验证失败，已恢复 ${BACKUP}；现有客服未重载"
 fi
 
-# Official Caddy handles SIGUSR1 as a config-file hot reload. This works even
-# when the admin API is disabled and does not restart the container.
-docker kill --signal=SIGUSR1 "$CADDY_CONTAINER" >/dev/null
-ok "Caddy 配置已验证并热重载（未重启容器）"
+reload_caddy_config() {
+  if docker exec "$CADDY_CONTAINER" \
+      caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
+    CADDY_RELOAD_METHOD="hot-reload"
+    return 0
+  fi
+
+  # wa-cs 的早期安装版本可能在 Caddyfile 里设置了 `admin off`。
+  # 这种配置没有可用的热重载入口，Caddy 2.8 对 SIGUSR1 也只会返回
+  # "not implemented"。必须得到明确授权才允许只重启共享代理容器；
+  # wacs_app、数据库、volume 和镜像都不会被触碰。
+  [[ "$ALLOW_CADDY_RESTART" == "1" ]] || return 2
+  docker restart "$CADDY_CONTAINER" >/dev/null
+  CADDY_RELOAD_METHOD="controlled-restart"
+}
+
+restore_caddy_config() {
+  cp -a "$BACKUP" "$CADDYFILE"
+  if docker exec "$CADDY_CONTAINER" \
+      caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
+    return 0
+  fi
+  if [[ "$ALLOW_CADDY_RESTART" == "1" ]]; then
+    docker restart "$CADDY_CONTAINER" >/dev/null
+    return 0
+  fi
+  return 1
+}
+
+CADDY_RELOAD_METHOD=""
+if ! reload_caddy_config; then
+  cp -a "$BACKUP" "$CADDYFILE"
+  fail "Caddy 管理接口关闭，无法热重载。未应用新配置；如接受仅重启 wacs_caddy 一次，请用 ALLOW_CADDY_RESTART=1 重新运行"
+fi
+if [[ "$CADDY_RELOAD_METHOD" == "controlled-restart" ]]; then
+  warn "Caddy 管理接口关闭：已按明确授权仅重启 wacs_caddy；wacs_app 与数据库未重启"
+else
+  ok "Caddy 配置已验证并热重载（未重启容器）"
+fi
 
 step "5/6 验证两个系统"
 MARKETMIND_OK=0
@@ -183,15 +219,13 @@ for _ in $(seq 1 45); do
   sleep 2
 done
 if [[ "$MARKETMIND_OK" -ne 1 ]]; then
-  cp -a "$BACKUP" "$CADDYFILE"
-  docker kill --signal=SIGUSR1 "$CADDY_CONTAINER" >/dev/null || true
-  fail "MarketMind HTTPS 验证失败，已恢复 Caddyfile 并热重载旧配置"
+  restore_caddy_config || true
+  fail "MarketMind HTTPS 验证失败，已恢复并重新应用原 Caddyfile"
 fi
 
 WACS_HEALTH_AFTER="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$WACS_APP_CONTAINER")"
 if [[ "$WACS_HEALTH_AFTER" != "healthy" && "$WACS_HEALTH_AFTER" != "running" ]]; then
-  cp -a "$BACKUP" "$CADDYFILE"
-  docker kill --signal=SIGUSR1 "$CADDY_CONTAINER" >/dev/null || true
+  restore_caddy_config || true
   fail "现有客服健康状态变为 ${WACS_HEALTH_AFTER}，已恢复 Caddy 配置"
 fi
 ok "现有客服仍为 ${WACS_HEALTH_AFTER}"
