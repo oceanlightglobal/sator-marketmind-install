@@ -1,7 +1,7 @@
 name: marketmind
 
 services:
-  app:
+  marketmind:
     image: ${APP_IMAGE:-ghcr.io/oceanlightglobal/sator-marketmind:latest}
     container_name: marketmind_app
     restart: unless-stopped
@@ -33,7 +33,7 @@ services:
     environment:
       UPDATER_TOKEN: ${UPDATER_TOKEN}
       PROJECT_DIR: /project
-      UPDATE_SERVICES: app
+      UPDATE_SERVICES: marketmind
       PROBE_CONTAINER: marketmind_app
       COMPOSE_PROJECT_NAME: marketmind
     volumes:
