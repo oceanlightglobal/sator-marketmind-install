@@ -1,0 +1,54 @@
+name: marketmind
+
+services:
+  app:
+    image: ${APP_IMAGE:-ghcr.io/oceanlightglobal/sator-marketmind:latest}
+    container_name: marketmind_app
+    restart: unless-stopped
+    environment:
+      DATA_DIR: /data
+      PORT: "3000"
+      HOST: 0.0.0.0
+      PUBLIC_URL: ${PUBLIC_URL}
+      TZ_NAME: ${TZ_NAME:-Asia/Kuala_Lumpur}
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:-}
+      AI_BASE_URL: ${AI_BASE_URL:-}
+      AI_API_KEY: ${AI_API_KEY:-}
+      AI_MODEL: ${AI_MODEL:-}
+      ENABLE_DEMO_ROUTES: "0"
+      VERSION_MANIFEST_URL: ${VERSION_MANIFEST_URL:-}
+      UPDATER_URL: http://updater:9000
+      UPDATER_TOKEN: ${UPDATER_TOKEN}
+    volumes:
+      - marketmind_data:/data
+    networks:
+      - marketmind_internal
+      - shared_proxy
+
+  updater:
+    image: ${UPDATER_IMAGE:-ghcr.io/oceanlightglobal/sator-marketmind-updater:latest}
+    container_name: marketmind_updater
+    restart: unless-stopped
+    environment:
+      UPDATER_TOKEN: ${UPDATER_TOKEN}
+      PROJECT_DIR: /project
+      UPDATE_SERVICES: app
+      PROBE_CONTAINER: marketmind_app
+      COMPOSE_PROJECT_NAME: marketmind
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/project:ro
+    networks:
+      - marketmind_internal
+
+networks:
+  marketmind_internal:
+    name: marketmind_internal
+  shared_proxy:
+    external: true
+    name: ${WACS_CADDY_NETWORK}
+
+volumes:
+  marketmind_data:
+    name: marketmind_data
