@@ -1,7 +1,7 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publishedAt": "2026-07-31",
-  "notes": "MarketMind v0.2.0：智能 Excel 导入（客户不用整理成模板）、Customer 360 客户资料库、业务员经营问答（客户名单 / 地区客户 / 信用空间 / 补货参考量 / 模糊时先澄清）、客户知识检索。修复 Excel 自闭合空单元格导致的整行错位、成本价/售价自动映射，以及无主管时后台客户资料页被错误过滤；客户信用额度与总欠款从客户账户表读取，并和交易逾期天数按客户确定性聚合。新增 migration 5/6/7，只追加，未改动已发布的 1-4。",
+  "notes": "MarketMind v0.2.1：修复发布版本取值被旧 .env 覆盖的问题，系统页和健康接口现在以镜像内 package.json 为准；修正 4aion 的 DeepSeek V4 Flash 预设模型 ID 为 deepseek-v4-flash。v0.2.0 的智能 Excel 导入、Customer 360、经营问答及 migration 5/6/7 保持不变。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
