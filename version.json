@@ -1,7 +1,7 @@
 {
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishedAt": "2026-07-31",
-  "notes": "MarketMind v0.2.2：修复智能导入遇到真实 FMCG 四表（客户、产品、销售、账龄）时错误累加旧合成资料的问题。四类核心资料齐全即作为完整快照，在同一事务中替换旧业务资料；手工维护的客户知识不会被清除。同步修正后台仍显示 v0.1 和“五表 Excel”的旧文案。",
+  "notes": "MarketMind v0.2.3：完成四类核心资料快照修复。真实 FMCG 导入会在同一事务中替换旧产品、销售、账龄和导入别名，同时保留客户主档、Customer 360 档案与手工知识，避免外键失败或误删资料。v0.2.2 的首页与导入文案修正一并保留。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
