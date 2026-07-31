@@ -39,7 +39,7 @@ done
 [[ "$INSTALL_DIR" != "$WACS_DIR" ]] || fail "MarketMind 不能安装到现有客服目录 ${WACS_DIR}"
 [[ "$INSTALL_DIR" == /opt/marketmind* ]] || fail "安装目录必须位于 /opt/marketmind 下"
 
-echo -e "${BOLD}MarketMind v0.1 · 同机隔离安装${NC}"
+echo -e "${BOLD}MarketMind v0.2 · 同机隔离安装${NC}"
 echo "现有客服：${WACS_DIR}（只读检查，不更新、不重启）"
 echo "新系统：  ${INSTALL_DIR}"
 
@@ -110,7 +110,7 @@ upsert_env "PUBLIC_URL" "$PUBLIC_URL" "$ENV_FILE"
 upsert_env "WACS_CADDY_NETWORK" "$WACS_CADDY_NETWORK" "$ENV_FILE"
 upsert_env "APP_IMAGE" "$APP_IMAGE" "$ENV_FILE"
 upsert_env "UPDATER_IMAGE" "$UPDATER_IMAGE" "$ENV_FILE"
-upsert_env "APP_VERSION" "0.1.3" "$ENV_FILE"
+upsert_env "APP_VERSION" "0.2.0" "$ENV_FILE"
 upsert_env "INITIAL_ADMIN_PASSWORD" "$INITIAL_ADMIN_PASSWORD" "$ENV_FILE"
 upsert_env "UPDATER_TOKEN" "$UPDATER_TOKEN" "$ENV_FILE"
 upsert_env "VERSION_MANIFEST_URL" "$VERSION_MANIFEST_URL" "$ENV_FILE"
