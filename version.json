@@ -1,7 +1,7 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "publishedAt": "2026-07-31",
-  "notes": "MarketMind v0.2.1：修复发布版本取值被旧 .env 覆盖的问题，系统页和健康接口现在以镜像内 package.json 为准；修正 4aion 的 DeepSeek V4 Flash 预设模型 ID 为 deepseek-v4-flash。v0.2.0 的智能 Excel 导入、Customer 360、经营问答及 migration 5/6/7 保持不变。",
+  "notes": "MarketMind v0.2.2：修复智能导入遇到真实 FMCG 四表（客户、产品、销售、账龄）时错误累加旧合成资料的问题。四类核心资料齐全即作为完整快照，在同一事务中替换旧业务资料；手工维护的客户知识不会被清除。同步修正后台仍显示 v0.1 和“五表 Excel”的旧文案。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
