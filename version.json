@@ -1,7 +1,7 @@
 {
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publishedAt": "2026-08-03",
-  "notes": "MarketMind v0.4.0：加入实名后台账号和三层资料授权、客户 360、智能 Excel 来源追溯，以及按需补货、长期未采购、信用和账龄信号。业务员主动查询后才开始 24 小时跟进窗口；已联系、暂缓和等待验证状态不会重复进入今日名单。加强暂缓日期、越权动作和状态恢复校验。系统不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.4.1：包含 v0.4 的实名后台账号、三层资料授权、客户 360 与按需机会风险；修复交易表同时存在毛额和净额时的金额映射，保留真实 FMCG 导出中的产品、客户账户与付款交易来源字段，并支持业务员在当前客户上下文中口语追问「他们最近买了什么」。系统仍只回应已授权人员主动发起的 WhatsApp 查询。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
