@@ -1,7 +1,7 @@
 {
-  "version": "0.2.3",
-  "publishedAt": "2026-07-31",
-  "notes": "MarketMind v0.2.3：完成四类核心资料快照修复。真实 FMCG 导入会在同一事务中替换旧产品、销售、账龄和导入别名，同时保留客户主档、Customer 360 档案与手工知识，避免外键失败或误删资料。v0.2.2 的首页与导入文案修正一并保留。",
+  "version": "0.4.0",
+  "publishedAt": "2026-08-03",
+  "notes": "MarketMind v0.4.0：加入实名后台账号和三层资料授权、客户 360、智能 Excel 来源追溯，以及按需补货、长期未采购、信用和账龄信号。业务员主动查询后才开始 24 小时跟进窗口；已联系、暂缓和等待验证状态不会重复进入今日名单。加强暂缓日期、越权动作和状态恢复校验。系统不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
