@@ -1,7 +1,7 @@
 {
-  "version": "0.4.1",
-  "publishedAt": "2026-08-03",
-  "notes": "MarketMind v0.4.1：包含 v0.4 的实名后台账号、三层资料授权、客户 360 与按需机会风险；修复交易表同时存在毛额和净额时的金额映射，保留真实 FMCG 导出中的产品、客户账户与付款交易来源字段，并支持业务员在当前客户上下文中口语追问「他们最近买了什么」。系统仍只回应已授权人员主动发起的 WhatsApp 查询。",
+  "version": "0.5.0",
+  "publishedAt": "2026-08-04",
+  "notes": "MarketMind v0.5.0：把 WhatsApp 从固定命令查询升级为受控的口语销售助理。业务员可用店名简称、名单序号、上下文和明确纠正连续查询；支持把最近采购、欠款/额度、放货判断和补货参考合并为一条带正式客户身份栏的回复。新增模型自动侦测、结构化连接测试与原子保存；机会风险显示触发原因、规则版本和资料日期；后台可新增、编辑手动客户、归档及恢复。所有数字仍只来自 Excel/数据库和固定规则；系统只回应已授权人员主动发起的 WhatsApp 消息。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
