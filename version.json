@@ -1,7 +1,7 @@
 {
-  "version": "0.5.0",
+  "version": "0.5.3",
   "publishedAt": "2026-08-04",
-  "notes": "MarketMind v0.5.0：把 WhatsApp 从固定命令查询升级为受控的口语销售助理。业务员可用店名简称、名单序号、上下文和明确纠正连续查询；支持把最近采购、欠款/额度、放货判断和补货参考合并为一条带正式客户身份栏的回复。新增模型自动侦测、结构化连接测试与原子保存；机会风险显示触发原因、规则版本和资料日期；后台可新增、编辑手动客户、归档及恢复。所有数字仍只来自 Excel/数据库和固定规则；系统只回应已授权人员主动发起的 WhatsApp 消息。",
+  "notes": "MarketMind v0.5.3：完成口语销售助理强化与 WhatsApp 互动底座。修复“我手上的客户有谁”“他最近补了什么”“刚才那家欠多少”等真实口语被误当地区或店名的问题；已知问法优先走确定性识别，未知口语才调用 LLM，并强制 JSON object 输出。新增主菜单、更多功能、Quick Reply 和客户 List，支持候选、客户名单、今日机会与风险及客户详情快捷查询；互动发送失败自动回退纯文字。客户选择使用绑定业务员且 15 分钟失效的不透明 token，点击时重新执行客户范围检查。所有金额与判断仍只来自数据库和固定规则，系统仍不会主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
