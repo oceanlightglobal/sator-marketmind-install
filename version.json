@@ -1,7 +1,7 @@
 {
-  "version": "0.6.1",
+  "version": "0.6.2",
   "publishedAt": "2026-08-05",
-  "notes": "MarketMind v0.6.1：WhatsApp 主路径从单一固定意图分类升级为有边界的对话助理。LLM 可结合当前客户、最近对话、候选和客户名单规划一个或多个批准查询工具，并处理“在哪里”“地址有吗”“那最近买了什么”“好的谢谢”等连续口语。新增客户位置与地址卡：优先使用人工档案，其次读取 Excel 地址；只有地区时会准确说明缺少完整地址。业务事实仍由权限过滤后的数据库、规则与接地闸产生；自然表达模型只看到不透明占位符，不接触金额、账龄、地址正文或放货判断。AI 不可用时保留关键词和按钮降级。无数据库迁移，不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.6.2：修正生产 AI 网关在推理模型超过 20 秒时过早降级到机械菜单的问题。默认 AI 完整响应等待时间提高到 60 秒，仍可通过环境变量调整；数据库事实、权限、接地闸和按需回复边界不变。包含 v0.6.1 的有边界对话助理、连续口语、客户位置与地址卡功能。无数据库迁移，不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
