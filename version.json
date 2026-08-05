@@ -1,7 +1,7 @@
 {
-  "version": "0.7.1",
+  "version": "0.7.2",
   "publishedAt": "2026-08-05",
-  "notes": "MarketMind v0.7.1：v0.7 上线验收热修。事实卡没有类型化蓝图时不再交给模型随意加前缀，避免额度/欠款卡出现“这家欠💳...”这类生硬包装；有类型化蓝图的回复必须按字段契约顺序使用占位符，避免最近采购被模型倒装成别扭句。v0.7 的同号码串行、缺失地址表达、最近采购数量/净额/实际单价、未来日期阻断与迁移 22 全部保留；不主动发送 WhatsApp，不新增数据库迁移。",
+  "notes": "MarketMind v0.7.2：v0.7 上线验收热修补丁。事实卡没有类型化蓝图时不再交给模型随意加前缀；类型化占位符必须按字段契约顺序出现；最近采购占位符只携带采购明细，不重复携带“最近采购”标题，避免生成“最近购买了这些：最近采购：”。v0.7 的同号码串行、缺失地址表达、数量/净额/实际单价、未来日期阻断与迁移 22 全部保留；不主动发送 WhatsApp，不新增数据库迁移。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
