@@ -1,7 +1,7 @@
 {
-  "version": "0.6.4",
+  "version": "0.6.5",
   "publishedAt": "2026-08-05",
-  "notes": "MarketMind v0.6.4：兼容 4aion Deepseek v4 Flash 对 response_format 参数返回 400 的情况。系统先请求严格 JSON 模式；网关不支持时自动去掉该可选参数重试，仍对输出执行 JSON 解析、批准工具白名单和接地校验。运行与连接测试等待上限为 60 秒。包含有边界连续对话、客户位置与地址卡；无数据库迁移，不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.6.5：完成 4aion Deepseek v4 Flash 兼容与生产口语表达加固。模型可在不支持 response_format 时安全重试；自然表达不得把“资料尚未上传”说成“有”，也不得承诺导航、路线等系统未提供能力，违规时回退到准确数据库卡片，并清理重复标点。权限、业务事实和接地闸不变；无数据库迁移，不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
