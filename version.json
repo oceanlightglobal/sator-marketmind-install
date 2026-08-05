@@ -1,7 +1,7 @@
 {
-  "version": "0.5.3",
+  "version": "0.6.0",
   "publishedAt": "2026-08-04",
-  "notes": "MarketMind v0.5.3：完成口语销售助理强化与 WhatsApp 互动底座。修复“我手上的客户有谁”“他最近补了什么”“刚才那家欠多少”等真实口语被误当地区或店名的问题；已知问法优先走确定性识别，未知口语才调用 LLM，并强制 JSON object 输出。新增主菜单、更多功能、Quick Reply 和客户 List，支持候选、客户名单、今日机会与风险及客户详情快捷查询；互动发送失败自动回退纯文字。客户选择使用绑定业务员且 15 分钟失效的不透明 token，点击时重新执行客户范围检查。所有金额与判断仍只来自数据库和固定规则，系统仍不会主动发送 WhatsApp。",
+  "notes": "MarketMind v0.6.0：口语识别改为「LLM 优先 + 词表兜底」。此前词表末尾的兜底会把任何短文本当成店名，导致 LLM 的入口几乎永远打不开——生产实测业务员连问三句地区客户只答对一句。现在每一句都先问模型（纯数字选候选、菜单和按钮回传除外），模型不可用时退回词表；词表新增 confident 标记区分「明确命中」与「兜底猜测」。地区名改用业务员名下的真实数据反向匹配原话，不再依赖词表穷举。意图识别会把该业务员可见的地区与客户名称发给已配置的 Sator Gateway 用于判词。金额、账龄、名单仍然只来自数据库与固定规则；系统仍不会主动发送 WhatsApp。无数据库迁移。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
