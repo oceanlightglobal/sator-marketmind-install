@@ -1,7 +1,7 @@
 {
-  "version": "0.7.0",
+  "version": "0.7.1",
   "publishedAt": "2026-08-05",
-  "notes": "MarketMind v0.7.0：修复生产连续对话的结构性问题。同一业务员消息严格按接收顺序处理；保存上一笔成功工具、回答主题与地区，寒暄不会清除业务上下文。客户位置与最近采购使用带 present/missing 状态的类型化占位符，让模型自然表达但无法把缺失资料说成已有；最近采购补齐数量、净额和实际单价及来源。导入会在写库前拦截未来交易、付款、快照和客户最近下单日期。后台同步说明模型与确定性后端的真实职责边界。迁移 22 仅增加非敏感对话摘要字段；不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.7.1：v0.7 上线验收热修。事实卡没有类型化蓝图时不再交给模型随意加前缀，避免额度/欠款卡出现“这家欠💳...”这类生硬包装；有类型化蓝图的回复必须按字段契约顺序使用占位符，避免最近采购被模型倒装成别扭句。v0.7 的同号码串行、缺失地址表达、最近采购数量/净额/实际单价、未来日期阻断与迁移 22 全部保留；不主动发送 WhatsApp，不新增数据库迁移。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
