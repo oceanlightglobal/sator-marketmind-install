@@ -1,7 +1,7 @@
 {
-  "version": "0.6.3",
+  "version": "0.6.4",
   "publishedAt": "2026-08-05",
-  "notes": "MarketMind v0.6.3：完整修正 Deepseek 推理模型的生产连接与口语助理降级问题。运行调用和后台连接测试均允许 60 秒完成；模型测试提供足够输出预算，并兼容合法 JSON 被代码块包裹的响应。包含 v0.6.1 的有边界连续对话、客户位置与地址卡。数据库事实、权限与接地闸不变；无数据库迁移，不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.6.4：兼容 4aion Deepseek v4 Flash 对 response_format 参数返回 400 的情况。系统先请求严格 JSON 模式；网关不支持时自动去掉该可选参数重试，仍对输出执行 JSON 解析、批准工具白名单和接地校验。运行与连接测试等待上限为 60 秒。包含有边界连续对话、客户位置与地址卡；无数据库迁移，不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
