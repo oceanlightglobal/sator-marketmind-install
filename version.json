@@ -1,7 +1,7 @@
 {
-  "version": "0.7.5",
+  "version": "0.7.6",
   "publishedAt": "2026-08-06",
-  "notes": "MarketMind v0.7.5：修复 WhatsApp List/按钮选择后仍可能被金额卡接地闸拦成“核对不上”的体验问题。List/按钮选择现在先打开确定性的客户概览卡，锁定正式客户；业务员随后点“欠款与额度”“最近采购”“补货建议”或直接追问时继续沿用该客户上下文。继续支持多行和单行“序号 + 客户名称 + 客户编号”回传，并按当前授权范围重新校验。不新增数据库迁移，不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.7.6：修复真实 WhatsApp List row 带不透明 actionId 时仍被解析成客户编号并直接进入金额军情卡的问题。现在 actionId、单行正文、多行正文三种选择回传都会统一进入“客户选择”路径：先打开确定性的客户概览并锁定正式客户；后续“欠款与额度”“最近采购”“补货建议”继续沿用该客户上下文。不新增数据库迁移，不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
