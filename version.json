@@ -1,7 +1,7 @@
 {
-  "version": "0.7.3",
+  "version": "0.7.4",
   "publishedAt": "2026-08-06",
-  "notes": "MarketMind v0.7.3：修复 WhatsApp List/按钮选择在部分客户端或 YCloud 回传为“序号 + 客户名称 + 客户编号”正文时被当成普通聊天的问题。现在会把这种选择正文还原为客户选择，重新按当前业务员/主管客户范围校验，再打开正式客户详情；纯数字候选选择和不透明 action token 保持原行为。新增客户名单、优先跟进名单和越权编号伪造回归测试；不新增数据库迁移，不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.7.4：继续加固 WhatsApp List/按钮选择正文解析。除了多行“序号 + 客户名称 + 客户编号”，也支持部分客户端或测试台压成单行的“序号 + 客户名称 + 客户编号”。仍然会按当前业务员/主管可见客户范围重新校验客户编号，防止越权伪造；纯数字候选选择和不透明 action token 保持原行为。不新增数据库迁移，不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
