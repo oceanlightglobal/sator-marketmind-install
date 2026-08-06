@@ -1,7 +1,7 @@
 {
-  "version": "0.7.4",
+  "version": "0.7.5",
   "publishedAt": "2026-08-06",
-  "notes": "MarketMind v0.7.4：继续加固 WhatsApp List/按钮选择正文解析。除了多行“序号 + 客户名称 + 客户编号”，也支持部分客户端或测试台压成单行的“序号 + 客户名称 + 客户编号”。仍然会按当前业务员/主管可见客户范围重新校验客户编号，防止越权伪造；纯数字候选选择和不透明 action token 保持原行为。不新增数据库迁移，不主动发送 WhatsApp。",
+  "notes": "MarketMind v0.7.5：修复 WhatsApp List/按钮选择后仍可能被金额卡接地闸拦成“核对不上”的体验问题。List/按钮选择现在先打开确定性的客户概览卡，锁定正式客户；业务员随后点“欠款与额度”“最近采购”“补货建议”或直接追问时继续沿用该客户上下文。继续支持多行和单行“序号 + 客户名称 + 客户编号”回传，并按当前授权范围重新校验。不新增数据库迁移，不主动发送 WhatsApp。",
   "appImage": "ghcr.io/oceanlightglobal/sator-marketmind:latest",
   "updaterImage": "ghcr.io/oceanlightglobal/sator-marketmind-updater:latest"
 }
